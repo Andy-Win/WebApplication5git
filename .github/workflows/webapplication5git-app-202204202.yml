@@ -42,6 +42,7 @@ jobs:
       uses: azure/CLI@v1
       with:
         inlineScript: >
+          az config set extension.use_dynamic_install=yes_without_prompt
           echo "Installing containerapp extension"
           az config set extension.use_dynamic_install=yes_without_prompt
           echo "Starting Deploying"
