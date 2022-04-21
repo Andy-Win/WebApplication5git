@@ -42,13 +42,15 @@ jobs:
       uses: azure/CLI@v1
       with:
         inlineScript: >
-          az config set extension.use_dynamic_install=yes_without_prompt
-          echo "Installing containerapp extension"
-          az config set extension.use_dynamic_install=yes_without_prompt
-          echo "Starting Deploying"
-          az containerapp registry set --name ${{ env.CONTAINER_APP_NAME }} --resource-group ${{ env.CONTAINER_APP_RESOURCE_GROUP_NAME }} --server ${{ env.CONTAINER_REGISTRY_LOGIN_SERVER }} --username ${{ secrets.WebApplication5git20220420230527_USERNAME_FFFF }} --password ${{ secrets.WebApplication5git20220420230527_PASSWORD_FFFF }}
+          echo "Installing containerapp extension" 
 
-          az containerapp update --name ${{ env.CONTAINER_APP_NAME }} --container-name ${{ env.CONTAINER_APP_CONTAINER_NAME }} --resource-group ${{ env.CONTAINER_APP_RESOURCE_GROUP_NAME }} --image ${{ env.CONTAINER_REGISTRY_LOGIN_SERVER }}/${{ env.PROJECT_NAME_FOR_DOCKER }}:${{ github.sha }}
+          az extension add --name containerapp --yes 
+
+          echo "Starting Deploying"
+
+          az containerapp registry set --name ${{ env.CONTAINER_APP_NAME }} --resource-group ${{ env.CONTAINER_APP_RESOURCE_GROUP_NAME }} --server ${{ env.CONTAINER_REGISTRY_LOGIN_SERVER }} --username  ${{ secrets.vramakmynewregistry_USERNAME_FFFF }} --password ${{ secrets.vramakmynewregistry_PASSWORD_FFFF }} --debug
+          az containerapp update --name ${{ env.CONTAINER_APP_NAME }} --container-name ${{ env.CONTAINER_APP_CONTAINER_NAME }} --resource-group ${{ env.CONTAINER_APP_RESOURCE_GROUP_NAME }} --image ${{ env.CONTAINER_REGISTRY_LOGIN_SERVER }}/${{ env.PROJECT_NAME_FOR_DOCKER }}:${{ github.sha }} --debug
+
     - name: logout
       run: >
         az logout
